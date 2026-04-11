@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function FicheCard({ fiche, onEdit, onDelete }) {
   return (
@@ -31,7 +32,7 @@ function FicheCard({ fiche, onEdit, onDelete }) {
       {fiche.fichier_url && (
         <p>
           <a
-            href={`http://localhost:5000${fiche.fichier_url}`}
+            href={`${API_URL}${fiche.fichier_url}`}
             target="_blank"
             rel="noreferrer"
           >

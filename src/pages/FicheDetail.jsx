@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function FicheDetail() {
   const { id } = useParams()
@@ -9,7 +10,7 @@ function FicheDetail() {
   useEffect(() => {
     async function chargerFiche() {
       try {
-        const response = await fetch(`http://localhost:5000/fiches/${id}`)
+        const response = await fetch(`${API_URL}/fiches/${id}`)
         const data = await response.json()
 
         if (!response.ok) {
@@ -57,9 +58,9 @@ function FicheDetail() {
 
         {fiche.fichier_url && (
           <p>
-            <strong>Fichier joint :</strong>{' '}
+            <strong>Fichier :</strong>{' '}
             <a
-              href={`http://localhost:5000${fiche.fichier_url}`}
+              href={`${API_URL}${fiche.fichier_url}`}
               target="_blank"
               rel="noreferrer"
             >

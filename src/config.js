@@ -1,0 +1,1 @@
+export const API_URL = 'https://notely-gh5n.onrender.com'
