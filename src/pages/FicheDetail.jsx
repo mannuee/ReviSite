@@ -1,9 +1,40 @@
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import fiches from '../data/fiches'
 
 function FicheDetail() {
   const { id } = useParams()
-  const fiche = fiches.find((f) => f.id === Number(id))
+  const [fiche, setFiche] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function chargerFiche() {
+      try {
+        const response = await fetch(`http://localhost:5000/fiches/${id}`)
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erreur chargement fiche')
+        }
+
+        setFiche(data)
+      } catch (error) {
+        console.error('Erreur chargement fiche :', error)
+        setFiche(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    chargerFiche()
+  }, [id])
+
+  if (loading) {
+    return (
+      <main>
+        <p>Chargement...</p>
+      </main>
+    )
+  }
 
   if (!fiche) {
     return (
@@ -23,6 +54,19 @@ function FicheDetail() {
         <p><strong>Matière :</strong> {fiche.matiere}</p>
         <p><strong>Niveau :</strong> {fiche.niveau}</p>
         <p><strong>Résumé :</strong> {fiche.resume}</p>
+
+        {fiche.fichier_url && (
+          <p>
+            <strong>Fichier joint :</strong>{' '}
+            <a
+              href={`http://localhost:5000${fiche.fichier_url}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {fiche.fichier_nom || 'Voir le fichier'}
+            </a>
+          </p>
+        )}
 
         <div className="contenu-fiche">
           <h2>Contenu</h2>

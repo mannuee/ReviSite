@@ -4,7 +4,7 @@ function Home() {
   return (
     <main className="home">
       <section className="hero">
-        <h1>Révise plus facilement avec RéviSite</h1>
+        <h1>Révise plus facilement avec Notely</h1>
         <p>
           Une plateforme de fiches de révision claires, organisées et
           interactives pour apprendre plus efficacement.
